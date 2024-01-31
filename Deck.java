@@ -6,12 +6,70 @@
  */
 
 import greenfoot.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 public class Deck 
 {
-    /****************************************************
-    ***   Leave as comment until ready to implement   ***
-    *****************************************************
+    private Card[] unShuffledDeck;
+    private ArrayList<Card> shuffledDeck;
+    Deck(int numOfCardsInDeck)
+    {
+        numOfCardsInDeck = limitNumCardsInDeck(numOfCardsInDeck);  // limits size to 27 or 81        
+        unShuffledDeck = new Card[numOfCardsInDeck + 1];           // playing cards plus blank card
+        shuffledDeck = new ArrayList<>();                          // Instantiates ArrayList with no elements
+        populateUnshuffledDeckWithCards(numOfCardsInDeck);         // Initializes Unshuffled Deck
+        createShuffledDeck();                                      // Initializes shuffled deck excluding blank card
+    }
+    public int getNumCardsInDeck()
+    {
+        return shuffledDeck.size();
+    }
+    public Card getTopCard()
+    {
+        if (shuffledDeck.isEmpty())
+        {
+            
+        }
+        else
+        {
+            return shuffledDeck.remove(0);
+        }
+        return null;
+    }
+    public Card getShuffledCard(int index)
+    {
+        if (index >= 0 && index < shuffledDeck.size())
+        {
+            return shuffledDeck.get(index);
+        }
+        return null;
+    }
+    public int limitNumCardsInDeck(int num) 
+    {
+        if (num <= 27) 
+        {
+            return 27;
+        }    
+        else 
+        {
+            return 81;
+        }
+    }
+    public void createShuffledDeck() 
+    {
+        shuffledDeck = new ArrayList<Card>();
+        List<Integer> indices = new ArrayList<Integer>();
+        for (int i = 1; i < unShuffledDeck.length; i++) 
+        { 
+            indices.add(i);
+        }
+        Collections.shuffle(indices);
+        for (int index : indices) 
+        {
+            shuffledDeck.add(unShuffledDeck[index]);
+        }   
+    }
     // adds all the cards to the unshuffled deck.   
     private void populateUnshuffledDeckWithCards(int numOfCardsInDeck)        
     {
@@ -268,6 +326,4 @@ public class Deck
                 }
           }
     }
-    
-    **************  END OF COMMENT BLOCK  ***************/
 }
