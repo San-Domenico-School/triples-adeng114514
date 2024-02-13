@@ -25,26 +25,17 @@ public class Deck
     {
         return shuffledDeck.size();
     }
+    
     public Card getTopCard()
     {
-        if (shuffledDeck.isEmpty())
-        {
-            
-        }
-        else
-        {
-            return shuffledDeck.remove(0);
-        }
-        return null;
+        return shuffledDeck.remove(0);
     }
+    
     public Card getShuffledCard(int index)
     {
-        if (index >= 0 && index < shuffledDeck.size())
-        {
-            return shuffledDeck.get(index);
-        }
-        return null;
+        return shuffledDeck.get(index);
     }
+    
     public int limitNumCardsInDeck(int num) 
     {
         if (num <= 27) 

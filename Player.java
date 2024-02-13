@@ -24,6 +24,7 @@ public class Player extends Actor
         selectedCardsIndex = new ArrayList<Integer>(); 
         cardsSelected = new Card[3];
     }
+    
     public void act()
     {
         selectCards(); 
@@ -33,10 +34,12 @@ public class Player extends Actor
             resetCardsSelected();
         }
     }
+    
     public void addedToWorld(World world)
     {
         cardsOnBoard = (ArrayList) getWorld().getObjects(Card.class);
     }
+    
     private void selectCards()
     {
         for (int i = 0; i < cardsOnBoard.size(); i++) 
@@ -55,18 +58,21 @@ public class Player extends Actor
             }
         }
     }
+    
     private void selectCard(Card card, int index)
     {
         card.setIsSelected(true);
         card.setImage(card.getSelectedCardImage());
         selectedCardsIndex.add(index);
     }
+    
     private void unselectCard(Card card, int index) 
     {
         card.setIsSelected(false);
         card.setImage(card.getCardImage());
         selectedCardsIndex.remove(Integer.valueOf(index));
     }
+    
     private boolean threeCardsHaveBeenSelected()
     {
          if(selectedCardsIndex.size() == 3)
@@ -81,6 +87,7 @@ public class Player extends Actor
               return false;
          }
     }
+    
     private void resetCardsSelected()
     {
           for(int i = 0; i < cardsOnBoard.size(); i++)

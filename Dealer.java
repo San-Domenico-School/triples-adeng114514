@@ -25,7 +25,6 @@ public class Dealer extends Actor {
     public void addedToWorld(World world) 
     {
         dealBoard();
-        setUI();
     }
     public void dealBoard() 
     {
@@ -73,7 +72,27 @@ public class Dealer extends Actor {
     }
     public void actionIfTriple(ArrayList<Card> cardsOnBoard, Card[] cardsSelected, ArrayList<Integer> selectedCardsIndex) 
     {
-        //
+        int[][] cardsXYCoordinate = new int[3][2];  
+       for(int card = 0; card < 3; card++)
+       {
+            cardsXYCoordinate[card][0] = cardsSelected[card].getX();
+            cardsXYCoordinate[card][1] = cardsSelected[card].getY();
+       }    
+       Animations.slideAndTurn(cardsSelected);     
+       for(int card = 0; card < 3; card++)
+       { 
+           getWorld().removeObject(cardsSelected[card]);
+           if(deck.getNumCardsInDeck() > 0)
+           {
+               cardsOnBoard.set(selectedCardsIndex.get(card),deck.getTopCard());
+               getWorld().addObject(cardsOnBoard.get(selectedCardsIndex.get(card)), 
+               cardsXYCoordinate[card][0], 
+               cardsXYCoordinate[card][1]);
+           }
+       }
+       Scorekeeper.updateScore();
+       setUI();
+       numCardsInDeck --;
     }
     public boolean setCardsSelected(ArrayList<Card> cards, ArrayList<Integer> indices, Card[] selectedCards) 
     {
@@ -81,14 +100,13 @@ public class Dealer extends Actor {
         int shadings = cardsSelected[0].getShading() + cardsSelected[1].getShading() + cardsSelected[2].getShading();
         int colors = cardsSelected[0].getColor().ordinal() + cardsSelected[1].getColor().ordinal() + cardsSelected[2].getColor().ordinal();
         int numberOfShapes = cardsSelected[0].getNumberOfShapes() + cardsSelected[1].getNumberOfShapes() + cardsSelected[2].getNumberOfShapes();
-
         if ((shapes % 3 == 0) && (shadings % 3 == 0) && (colors % 3 == 0) && (numberOfShapes % 3 == 0)) 
         {
-        return true;      
+            return true;      
         } 
         else
         {
-        return false;
+            return false;
         }
     }
 }
