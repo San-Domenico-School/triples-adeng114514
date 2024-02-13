@@ -8,7 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 import greenfoot.*;
 import java.util.ArrayList;
-
 public class Dealer extends Actor {
     private int numCardsInDeck;
     private int tripleRemaining;
@@ -51,20 +50,45 @@ public class Dealer extends Actor {
     }
     public void endGame() 
     {
-        // Implementation for ending the game (e.g., displaying a message or performing cleanup)
+        if(numCardsInDeck == 0)
+        {
+            Greenfoot.stop();
+            getWorld().showText("You won!",200,300);
+        }
     }
-    public void checkIfTriple() 
+    public void checkIfTriple(ArrayList<Card> cardsOnBoard, Card[]cardsSelected, ArrayList<Integer> selected) 
     {
-        // Implementation for checking if there is a triple on the board
+        int shapes = cardsSelected[0].getShape().ordinal() + cardsSelected[1].getShape().ordinal() + cardsSelected[2].getShape().ordinal();
+        int shadings = cardsSelected[0].getShading() + cardsSelected[1].getShading() + cardsSelected[2].getShading();
+        int colors = cardsSelected[0].getColor().ordinal() + cardsSelected[1].getColor().ordinal() + cardsSelected[2].getColor().ordinal();
+        int numberOfShapes = cardsSelected[0].getNumberOfShapes() + cardsSelected[1].getNumberOfShapes() + cardsSelected[2].getNumberOfShapes();
+        if ((shapes % 3 == 0) && (shadings % 3 == 0) && (colors % 3 == 0) && (numberOfShapes % 3 == 0)) 
+        {
+            actionIfTriple(cardsOnBoard, cardsSelected, selectedCardsIndex);
+        } 
+        else
+        {
+            Animations.wobble(cardsSelected);
+        }
     }
-    public void actionIfTriple() 
+    public void actionIfTriple(ArrayList<Card> cardsOnBoard, Card[] cardsSelected, ArrayList<Integer> selectedCardsIndex) 
     {
-        // Implementation for the action to be taken if a triple is found
+        //
     }
-    public void setCardsSelected(ArrayList<Card> cards, ArrayList<Integer> indices, Card[] selectedCards) 
+    public boolean setCardsSelected(ArrayList<Card> cards, ArrayList<Integer> indices, Card[] selectedCards) 
     {
-        // Implementation for setting the selected cards and their indices
-        // You might want to store the selected cards and indices in instance variables
-        // for later use in other methods.
+        int shapes = cardsSelected[0].getShape().ordinal() + cardsSelected[1].getShape().ordinal() + cardsSelected[2].getShape().ordinal();
+        int shadings = cardsSelected[0].getShading() + cardsSelected[1].getShading() + cardsSelected[2].getShading();
+        int colors = cardsSelected[0].getColor().ordinal() + cardsSelected[1].getColor().ordinal() + cardsSelected[2].getColor().ordinal();
+        int numberOfShapes = cardsSelected[0].getNumberOfShapes() + cardsSelected[1].getNumberOfShapes() + cardsSelected[2].getNumberOfShapes();
+
+        if ((shapes % 3 == 0) && (shadings % 3 == 0) && (colors % 3 == 0) && (numberOfShapes % 3 == 0)) 
+        {
+        return true;      
+        } 
+        else
+        {
+        return false;
+        }
     }
 }
